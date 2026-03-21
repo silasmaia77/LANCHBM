@@ -1,0 +1,11 @@
+✅ *PEDIDO CONFIRMADO* #20260203181551
+👤 *Cliente:* Samuel
+📍 *Endereço:* Av. Paulista, 1000
+--------------------------------
+🍔 *ITENS DO PEDIDO:*
+1 X-Burger (R$ 26,00) + 1 Coca-Cola (lata 350ml) (R$ 6,00)
+--------------------------------
+💰 *TOTAL:* R$ 32.00
+💳 *Pagamento:* Pix
+--------------------------------
+🚀 *Status:* Enviado para a cozinha! Aguarde a entrega. 😋

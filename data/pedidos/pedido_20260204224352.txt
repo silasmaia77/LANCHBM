@@ -1,0 +1,16 @@
+✅ *PEDIDO CONFIRMADO* #20260204224352
+👤 *Cliente:* Silas
+📍 *Endereço:* rua 25 de abril, dcentro 125
+--------------------------------
+🍔 *ITENS DO PEDIDO:*
+1 BM10 – Americano: R$ 30,00
+3 BM15 – X-Tudo Tradicional: R$ 114,00
+4 BM15 – X-Tudo Tradicional: R$ 152,00
+3 BM30 – Master Burguer: R$ 165,00
+5 Coca Cola (Lata 350ml): R$ 30,00
+7 Fanta (Lata 350ml): R$ 42,00
+--------------------------------
+💰 *TOTAL:* R$ 533.00
+💳 *Pagamento:* dinheiro
+--------------------------------
+🚀 *Status:* Enviado para a cozinha! Aguarde a entrega. 😋

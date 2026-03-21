@@ -1,0 +1,16 @@
+✅ *PEDIDO CONFIRMADO* #20260126234217
+👤 *Cliente:* Silas
+📍 *Endereço:* Rua 13 de Maio 2554
+--------------------------------
+🍔 *ITENS DO PEDIDO:*
+2 BM10 (Americano) - R$ 60,00
+3 BM15 (X-Tudo Tradicional) - R$ 114,00
+4 BM30 (Master Burguer) - R$ 220,00
+5 Latas de Coca-Cola - R$ 30,00
+10 Latas de Fanta - R$ 60,00
+Observações: Maionese verde e ketchup
+--------------------------------
+💰 *TOTAL:* R$ 494.00
+💳 *Pagamento:* Dinheiro (troco para R$ 500,00)
+--------------------------------
+🚀 *Status:* Enviado para a cozinha! Aguarde a entrega. 😋

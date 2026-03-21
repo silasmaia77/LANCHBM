@@ -1,0 +1,13 @@
+🧾 *RESUMO DO PEDIDO - BELLA MAYA*
+👤 Cliente: Samuel
+📅 Data: 23/01/2026 22:59
+-------------------------
+1x X-Burger
+   (R$ 26.00) ➡️ R$ 26.00
+1x Coca-Cola
+   (R$ 5.00) ➡️ R$ 5.00
+-------------------------
+💰 *TOTAL FINAL: R$ 31.00*
+💳 Pagamento: Dinheiro
+📍 Entrega: Av. Paulista, 1000
+-------------------------

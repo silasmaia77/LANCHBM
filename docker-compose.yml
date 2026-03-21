@@ -1,0 +1,119 @@
+services:
+  waha:
+    image: devlikeapro/waha:latest
+    container_name: waha_whatsapp
+    restart: always
+    environment:
+      - WHATSAPP_DEFAULT_ENGINE=WEBJS
+
+      # Swagger auth (observação: algumas opções são específicas do WAHA Plus,
+      # mas manter aqui não quebra no Core)
+      - WHATSAPP_SWAGGER_USERNAME=${WAHA_SWAGGER_USERNAME}
+      - WHATSAPP_SWAGGER_PASSWORD=${WAHA_SWAGGER_PASSWORD}
+
+      # API Key do WAHA (o header esperado é X-Api-Key)
+      - WAHA_API_KEY=${WAHA_API_KEY}
+
+      # Webhook interno (rede Docker)
+      - WHATSAPP_HOOK_URL=http://app:5000/webhook
+      - WHATSAPP_HOOK_EVENTS=message,state.change
+
+      # Header customizado no webhook (formato: Header:Valor;Header2:Valor2) <sources>[1]</sources>
+      - WHATSAPP_HOOK_CUSTOM_HEADERS=X-Webhook-Token:${WEBHOOK_TOKEN}
+
+      # Retries do webhook <sources>[1]</sources>
+      - WHATSAPP_HOOK_RETRIES_POLICY=linear
+      - WHATSAPP_HOOK_RETRIES_DELAY_SECONDS=2
+      - WHATSAPP_HOOK_RETRIES_ATTEMPTS=4
+
+      # (Opcional) Ajuda o WAHA a montar media.url corretamente em eventos com mídia <sources>[1]</sources>
+      # Em DEV/local, pode ficar assim:
+      - WAHA_BASE_URL=http://localhost:3000
+
+    ports:
+      # Local/produção: acessível só na sua máquina
+      - "127.0.0.1:3000:3000"
+    volumes:
+      # Persistência correta de sessão: /app/.sessions <sources>[2]</sources>
+      - ./sessions:/app/.sessions
+      - ./.media:/app/.media
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+
+  redis:
+    image: redis:7
+    container_name: redis_queue
+    restart: always
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_data:/data
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "5"
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: bellamaya_bot_image:prod
+    container_name: bellamaya_bot_api
+    restart: always
+    env_file:
+      - .env
+    environment:
+      - WAHA_BASE_URL=http://waha:3000
+      - WAHA_SESSION=default
+      - REDIS_URL=redis://redis:6379/0
+      - SQLITE_PATH=/app/data/app.db
+      - WEBHOOK_TOKEN=${WEBHOOK_TOKEN}
+    depends_on:
+      - waha
+      - redis
+    ports:
+      - "127.0.0.1:5000:5000"
+    volumes:
+      - ./data:/app/data
+      - ./data/pedidos:/app/data/pedidos
+      - ./data/relatorios:/app/data/relatorios
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+
+  worker:
+    # ✅ CORREÇÃO PRINCIPAL: worker também precisa buildar a imagem localmente
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: bellamaya_bot_image:prod
+    container_name: bellamaya_bot_worker
+    restart: always
+    env_file:
+      - .env
+    environment:
+      - WAHA_BASE_URL=http://waha:3000
+      - WAHA_SESSION=default
+      - REDIS_URL=redis://redis:6379/0
+      - SQLITE_PATH=/app/data/app.db
+    depends_on:
+      - redis
+      - waha
+    volumes:
+      - ./data:/app/data
+      - ./data/pedidos:/app/data/pedidos
+      - ./data/relatorios:/app/data/relatorios
+    command: ["python", "-m", "src.worker"]
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+
+volumes:
+  redis_data:
